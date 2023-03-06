@@ -8,8 +8,8 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": "yarn run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+    "**/*.{js,jsx,ts,tsx,vue}": "yarn run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json,vue}": [
       "prettier --write"
     ]
   },

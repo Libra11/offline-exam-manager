@@ -2,6 +2,9 @@
 defineProps<{
   msg: string
 }>()
+let arr = new Array(100).fill(0)
+console.log(arr);
+
 </script>
 
 <template>
