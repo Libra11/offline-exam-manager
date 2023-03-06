@@ -6,3 +6,20 @@ describe('My First Test', () => {
     cy.contains('h1', 'You did it!');
   });
 });
+
+describe('test', () => {
+  const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+  // 页面跳转 切换路由
+
+  it('visit', () => {
+    cy.visit('/');
+    cy.contains('About').click();
+    cy.url().should('include', '/about');
+    cy.get('.input-text').type('libra085925@gmail.com');
+    cy.get('.input-text').then((el) => {
+      const value = el.val();
+
+      expect(value).to.match(mailReg);
+    });
+  });
+});
