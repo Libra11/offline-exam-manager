@@ -8,8 +8,8 @@
     }
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,vue}": "yarn run lint-staged:js",
-    "**/*.{js,jsx,tsx,ts,less,md,json,vue}": [
+    "**/*.{js,ts,tsx,vue}": "yarn lint",
+    "**/*.{js,tsx,ts,scss,md,json,vue}": [
       "prettier --write"
     ]
   },
@@ -27,8 +27,7 @@
     "format": "prettier --write src/",
     "commit": "git cz",
     "prepare": "husky install",
-    "lint-staged": "lint-staged --allow-empty",
-    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx "
+    "lint-staged": "lint-staged --allow-empty"
   },
   "dependencies": {
     "pinia": "^2.0.32",
