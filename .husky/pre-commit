@@ -2,3 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn test:no-watch
+yarn lint-staged
+yarn test:e2e:dev

@@ -7,6 +7,12 @@
       "path": "node_modules/cz-customizable"
     }
   },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": "yarn run lint-staged:js",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write"
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -20,7 +26,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "commit": "git cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-staged": "lint-staged --allow-empty",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx "
   },
   "dependencies": {
     "pinia": "^2.0.32",
@@ -43,10 +51,13 @@
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^7.0.0",
     "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.9.0",
     "husky": "^8.0.0",
     "jsdom": "^21.1.0",
+    "lint-staged": "^13.1.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.4",
     "start-server-and-test": "^2.0.0",
