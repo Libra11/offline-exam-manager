@@ -9,7 +9,6 @@ describe('My First Test', () => {
 
 describe('test', () => {
   const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-  // 页面跳转 切换路由
 
   it('visit', () => {
     cy.visit('/');

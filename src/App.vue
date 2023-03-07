@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useDark, useToggle } from '@vueuse/core';
 import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
+
+const isDark = useDark(),
+  toggleDark = useToggle(isDark),
+  size = ref<'default' | 'large' | 'small'>('default'),
+
+  value1 = ref('');
+
 </script>
 
 <template>
@@ -9,6 +18,9 @@ import HelloWorld from './components/HelloWorld.vue';
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+      <el-button type="primary" @click="toggleDark()">Toggle Dark Mode</el-button>
+      {{ isDark }}
+      <el-date-picker v-model="value1" type="date" placeholder="Pick a day" :size="size" />
 
       <nav>
         <RouterLink to="/">Home</RouterLink>

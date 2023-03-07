@@ -2,6 +2,7 @@
   <div class="about">
     <h1>This is an about page</h1>
     <input class="input-text" type="text" />
+    <el-button type="primary">Primary</el-button>
   </div>
 </template>
 
