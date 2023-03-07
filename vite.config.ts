@@ -9,18 +9,28 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  'plugins': [
+  clearScreen: false,
+  server: {
+    strictPort: true
+  },
+  envPrefix: ['VITE_', 'TAURI_'],
+  build: {
+    target: process.env.TAURI_PLATFORM == 'windows' ? 'chrome105' : 'safari13',
+    minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
+    sourcemap: Boolean(process.env.TAURI_DEBUG)
+  },
+  plugins: [
     vue(),
     vueJsx(),
     AutoImport({
-      'resolvers': [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      'resolvers': [ElementPlusResolver()]
+      resolvers: [ElementPlusResolver()]
     })
   ],
-  'resolve': {
-    'alias': {
+  resolve: {
+    alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
