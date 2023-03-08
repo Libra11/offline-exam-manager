@@ -9,22 +9,22 @@ module.exports = {
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting'
   ],
-  env: {
-    browser: true,
-    es6: true,
-    node: true,
-    commonjs: true
-  },
   overrides: [
     {
       files: ['cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'],
       extends: ['plugin:cypress/recommended']
     }
   ],
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+    commonjs: true
+  },
   parserOptions: {
     ecmaVersion: 'latest'
   },
-  ignorePatterns: ['node_modules/*', 'dist/*', '!.prettierrc.js', 'src-tauri/*'],
+  ignorePatterns: ['node_modules/*', 'dist/*', '!.prettierrc.js'],
   rules: {
     'no-alert': 0, //禁止使用alert confirm prompt
     'no-array-constructor': 2, //禁止使用数组构造器
