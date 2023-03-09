@@ -1,27 +1,45 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import { RouterLink, RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue';
 
-const isDark = useDark(),
-  toggleDark = useToggle(isDark),
+const isDark = useDark();
+let toggleDark = useToggle(isDark),
   size = ref<'default' | 'large' | 'small'>('default'),
+  value1 = ref(''),
+  isAnimation = ref(true);
 
-  value1 = ref('');
+function removeAnimation() {
+  if (isAnimation.value) return;
+  let style: HTMLStyleElement = document.createElement('style');
+  style.textContent = `
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    transition-delay: 0s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-property: none !important;
+    animation-name: none !important;
+  }`;
+  document.head.appendChild(style);
+}
 
+onBeforeMount(() => {
+  removeAnimation();
+});
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
+    <div class="wrapper no-animation">
       <HelloWorld msg="You did it!" />
       <el-button type="primary" @click="toggleDark()">Toggle Dark Mode</el-button>
       {{ isDark }}
       <el-date-picker v-model="value1" type="date" placeholder="Pick a day" :size="size" />
-
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
@@ -32,7 +50,7 @@ const isDark = useDark(),
   <RouterView />
 </template>
 
-<style scoped>
+<style lang="scss">
 header {
   line-height: 1.5;
   max-height: 100vh;

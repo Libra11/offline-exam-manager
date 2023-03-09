@@ -27,12 +27,9 @@ module.exports = {
   ignorePatterns: ['node_modules/*', 'dist/*', '!.prettierrc.js'],
   rules: {
     'no-alert': 0, //禁止使用alert confirm prompt
-    'no-array-constructor': 2, //禁止使用数组构造器
-    'no-bitwise': 0, //禁止使用按位运算符
     'no-caller': 1, //禁止使用arguments.caller或arguments.callee
     'no-catch-shadow': 2, //禁止catch子句参数与外部作用域变量同名
     'no-class-assign': 2, //禁止给类赋值
-    'no-cond-assign': 2, //禁止在条件表达式中使用赋值语句
     'no-console': 2, //禁止使用console
     'no-const-assign': 2, //禁止修改const声明的变量
     'no-constant-condition': 2, //禁止在条件中使用常量表达式 if(true) if(1)
@@ -79,7 +76,6 @@ module.exports = {
     'no-multiple-empty-lines': [1, { max: 3 }], //空行最多不能超过2行
     'no-native-reassign': 2, //不能重写native对象
     'no-negated-in-lhs': 2, //in 操作符的左边不能有!
-    'no-nested-ternary': 0, //禁止使用嵌套的三目运算
     'no-new': 1, //禁止在使用new构造一个实例后不赋值
     'no-new-func': 1, //禁止使用new Function
     'no-new-object': 2, //禁止使用new Object()
@@ -90,7 +86,6 @@ module.exports = {
     'no-octal-escape': 2, //禁止使用八进制转义序列
     'no-param-reassign': 2, //禁止给参数重新赋值
     'no-path-concat': 0, //node中不能使用__dirname或__filename做路径拼接
-    'no-plusplus': 0, //禁止使用++，--
     'no-process-env': 0, //禁止使用process.env
     'no-process-exit': 0, //禁止使用process.exit()
     'no-proto': 2, //禁止使用__proto__属性
@@ -106,7 +101,6 @@ module.exports = {
     'no-spaced-func': 2, //函数调用时 函数名与()之间不能有空格
     'no-sparse-arrays': 2, //禁止稀疏数组， [1,,2]
     'no-sync': 0, //nodejs 禁止同步方法
-    'no-ternary': 0, //禁止使用三目运算符
     'no-trailing-spaces': 1, //一行结束后面不要有空格
     'no-this-before-super': 0, //在调用super()之前不能使用this或super
     'no-throw-literal': 2, //禁止抛出字面量错误 throw "error";
@@ -131,7 +125,6 @@ module.exports = {
     'arrow-spacing': 0, //=>的前/后括号
     'accessor-pairs': 0, //在对象中使用getter/setter
     'block-scoped-var': 0, //块语句中使用var
-    'brace-style': [1, '1tbs'], //大括号风格
     'callback-return': 1, //避免多次调用回调什么的
     camelcase: 2, //强制驼峰法命名
     'comma-dangle': [2, 'never'], //对象字面量项尾不能有逗号
@@ -142,7 +135,6 @@ module.exports = {
     'consistent-return': 0, //return 后面是否允许省略
     'consistent-this': [2, 'that'], //this别名
     'constructor-super': 0, //非派生类不能调用super，派生类必须调用super
-    curly: [2, 'all'], //必须使用 if(){} 中的{}
     'default-case': 2, //switch语句最后必须有default
     'dot-location': 0, //对象访问符的位置，换行的时候在行首还是行尾
     'dot-notation': [0, { allowKeywords: true }], //避免不必要的方括号
@@ -166,7 +158,7 @@ module.exports = {
     'max-statements': [0, 10], //函数内最多有几个声明
     'new-cap': 0, //函数名首行大写必须使用new方式调用，首行小写必须用不带new方式调用
     'new-parens': 2, //new时必须加小括号
-    'newline-after-var': 2, //变量声明后是否需要空一行
+    'newline-after-var': 0, //变量声明后是否需要空一行
     'object-curly-spacing': [0, 'never'], //大括号内是否允许不必要的空格
     'object-shorthand': 0, //强制对象字面量缩写语法
     'one-var': 1, //连续声明
@@ -190,7 +182,6 @@ module.exports = {
     'space-infix-ops': 0, //中缀操作符周围要不要有空格
     'space-unary-ops': [0, { words: true, nonwords: false }], //一元运算符的前/后要不要加空格
     'spaced-comment': 0, //注释风格要不要有空格什么的
-    strict: 2, //使用严格模式
     'use-isnan': 2, //禁止比较时使用NaN，只能用isNaN()
     'valid-jsdoc': 0, //jsdoc规则
     'valid-typeof': 2, //必须使用合法的typeof的值
