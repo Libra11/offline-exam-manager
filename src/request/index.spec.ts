@@ -5,10 +5,22 @@
  * @Description:
  * @FilePath: /libra-vue3-all-in-one-template/src/request/index.spec.ts
  */
-import { describe, it, expect } from 'vitest'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { getOptions } from './index'
+import { UserStore } from '@/store/modules/user'
 
 describe('fetch', () => {
+	let app: ReturnType<typeof createApp>
+	let store: ReturnType<typeof UserStore>
+
+	beforeEach(() => {
+		app = createApp({})
+		const pinia = createPinia()
+		app.use(pinia)
+		store = UserStore(pinia)
+	})
 	it('getOptions', () => {
 		expect(getOptions({ method: 'POST' })).toEqual({
 			method: 'POST',
@@ -25,12 +37,13 @@ describe('fetch', () => {
 			},
 		})
 		// have token
-		localStorage.setItem('token', '123')
+		const token = '123456'
+		store.setToken(token)
 		expect(getOptions()).toEqual({
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: 'Bearer 123',
+				Authorization: `Bearer ${token}`,
 			},
 		})
 	})

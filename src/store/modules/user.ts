@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2022-04-01 17:00:50
- * @LastEditTime: 2023-03-22 18:20:20
+ * @LastEditTime: 2023-03-22 18:52:04
  * @LastEditors: Libra
  * @Description:
  * @FilePath: /libra-vue3-all-in-one-template/src/store/modules/user.ts
@@ -16,7 +16,7 @@ export const UserStore = defineStore('user', {
 		token: '',
 	}),
 	actions: {
-		setName(token: string) {
+		setToken(token: string) {
 			this.token = token
 		},
 	},
