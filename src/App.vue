@@ -1,34 +1,22 @@
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue'
+import { ref } from 'vue'
 import { useDark, useToggle } from '@vueuse/core'
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+import { memberInfo } from './api'
+import { ElMessage } from 'element-plus'
 
 const isDark = useDark()
 let toggleDark = useToggle(isDark),
 	size = ref<'default' | 'large' | 'small'>('default'),
-	value1 = ref(''),
-	isAnimation = ref(true)
+	value1 = ref('')
 
-function removeAnimation() {
-	if (isAnimation.value) return
-	let style: HTMLStyleElement = document.createElement('style')
-	style.textContent = `
-  *, *::before, *::after {
-    transition-duration: 0s !important;
-    animation-duration: 0s !important;
-    transition-delay: 0s !important;
-    animation-delay: 0s !important;
-    animation-iteration-count: 1 !important;
-    transition-property: none !important;
-    animation-name: none !important;
-  }`
-	document.head.appendChild(style)
+const getInfo = async () => {
+	const res = await memberInfo()
+	if (res.code === 200) {
+		ElMessage.success(res.message)
+	}
 }
-
-onBeforeMount(() => {
-	removeAnimation()
-})
 </script>
 
 <template>
@@ -44,6 +32,7 @@ onBeforeMount(() => {
 				<RouterLink to="/">Home</RouterLink>
 				<RouterLink to="/about">About</RouterLink>
 			</nav>
+			<el-button @click="getInfo()">getInfo</el-button>
 		</div>
 	</header>
 
