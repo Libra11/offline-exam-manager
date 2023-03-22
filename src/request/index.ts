@@ -6,6 +6,7 @@
  * @FilePath: /libra-vue3-all-in-one-template/src/request/index.ts
  */
 import { config } from '@/api/config'
+import { useToken } from '@/composables/useToken'
 import { handleCode } from './code'
 
 export type ResponseData<T> = {
@@ -17,7 +18,7 @@ export type ResponseData<T> = {
 type Base = 'EXAM' | 'OJ'
 
 export function getOptions(option?: RequestInit): RequestInit {
-	const token = localStorage.getItem('token')
+	const token = useToken().value
 	// 设置默认值
 	const defaultOptions = {
 		method: 'GET',
