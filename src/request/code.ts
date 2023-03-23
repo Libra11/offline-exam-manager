@@ -17,10 +17,10 @@ export function handleCode(res: ResponseData<string>) {
 	switch (res.code) {
 		case code.LOGIN_FAIL:
 			// 登录失败
-			ElMessage('登录失败')
+			ElMessage.error('登录失败')
 			break
 		default:
-			ElMessage(res.message)
+			ElMessage.error(res.message)
 			break
 	}
 }

@@ -17,17 +17,26 @@ export type ResponseData<T> = {
 
 type Base = 'EXAM' | 'OJ'
 
-export function getOptions(option?: RequestInit): RequestInit {
+export interface RequestOptions extends Partial<RequestInit> {
+	formData?: FormData
+}
+
+export function getOptions(options?: RequestOptions): RequestInit {
 	const token = useToken().value
-	// 设置默认值
-	const defaultOptions = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: token ? `Bearer ${token}` : '',
-		},
+	const headers: Record<string, string> = {
+		Authorization: token ? `Bearer ${token}` : '',
 	}
-	return { ...defaultOptions, ...option }
+	if (options?.formData) {
+		options.body = options.formData
+	} else {
+		headers['Content-Type'] = 'application/json'
+	}
+	// 设置默认值
+	const defaultOptions: RequestInit = {
+		method: 'GET',
+		headers,
+	}
+	return { ...defaultOptions, ...options }
 }
 
 export default async <T>(url: string, baseUrl: Base = 'EXAM', option?: RequestInit): Promise<ResponseData<T>> => {

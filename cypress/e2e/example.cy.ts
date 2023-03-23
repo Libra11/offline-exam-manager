@@ -13,7 +13,7 @@ describe('test', () => {
 	it('visit', () => {
 		cy.visit('/')
 		cy.contains('About').click()
-		cy.url().should('include', '/about')
+		cy.url().should('include', '/login')
 		cy.get('.input-text').type('libra085925@gmail.com')
 		cy.get('.input-text').then((el) => {
 			const value = el.val()
