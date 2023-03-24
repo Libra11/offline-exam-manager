@@ -4,9 +4,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import './assets/main.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'element-plus/theme-chalk/el-message.css'
+import '@/assets/style/index.css'
 
 const app = createApp(App)
 app.use(router)

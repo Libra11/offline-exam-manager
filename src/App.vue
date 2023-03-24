@@ -27,6 +27,7 @@ const getInfo = async () => {
 			{{ isDark }}
 			<el-date-picker v-model="value1" type="date" placeholder="Pick a day" :size="size" />
 			<el-button @click="getInfo()">getInfo</el-button>
+			<div class="text-lg font-light">test tailwindcss</div>
 		</div>
 	</header>
 
