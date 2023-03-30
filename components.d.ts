@@ -9,9 +9,11 @@ export {}
 
 declare module '@vue/runtime-core' {
 	export interface GlobalComponents {
+		CustomDialog: typeof import('./src/components/CustomDialog.vue')['default']
 		ElButton: typeof import('element-plus/es')['ElButton']
 		ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
 		ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
+		GlobalDialog: typeof import('./src/components/GlobalDialog/index.vue')['default']
 		RouterLink: typeof import('vue-router')['RouterLink']
 		RouterView: typeof import('vue-router')['RouterView']
 	}

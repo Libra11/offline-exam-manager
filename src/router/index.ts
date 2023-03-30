@@ -1,3 +1,10 @@
+/*
+ * @Author: Libra
+ * @Date: 2023-03-06 10:21:05
+ * @LastEditTime: 2023-03-30 18:46:41
+ * @LastEditors: Libra
+ * @Description: 路由
+ */
 import whiteList from '@/utils/whiteList'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { useToken } from '@/composables/useToken'

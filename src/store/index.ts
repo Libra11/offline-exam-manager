@@ -1,10 +1,9 @@
 /*
  * @Author: Libra
- * @Date: 2022-04-01 16:58:00
- * @LastEditTime: 2022-04-19 15:32:23
+ * @Date: 2023-03-22 18:13:35
+ * @LastEditTime: 2023-03-30 18:47:07
  * @LastEditors: Libra
- * @Description:
- * @FilePath: /stone-interview-ui/src/store/index.ts
+ * @Description: store
  */
 import { createPinia } from 'pinia'
 import piniaPersist from 'pinia-plugin-persist'

@@ -1,9 +1,9 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-22 11:35:57
+ * @LastEditTime: 2023-03-30 18:42:58
  * @LastEditors: Libra
- * @Description:
- * @FilePath: /libra-vue3-all-in-one-template/src/request/index.spec.ts
+ * @Description: 测试文件
  */
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

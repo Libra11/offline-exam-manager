@@ -1,9 +1,9 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-22 10:14:24
+ * @LastEditTime: 2023-03-30 18:48:40
  * @LastEditors: Libra
  * @Description: 测试环境和生产环境配置文件
- * @FilePath: /libra-vue3-all-in-one-template/src/api/config.ts
  */
 type service = {
 	EXAM: string

@@ -1,9 +1,9 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-22 10:31:03
+ * @LastEditTime: 2023-03-30 18:43:21
  * @LastEditors: Libra
- * @Description:封装 fetch
- * @FilePath: /libra-vue3-all-in-one-template/src/request/index.ts
+ * @Description: fetch 封装
  */
 import { config } from '@/api/config'
 import { useToken } from '@/composables/useToken'

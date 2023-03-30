@@ -1,10 +1,9 @@
 /*
  * @Author: Libra
- * @Date: 2022-04-01 17:00:50
- * @LastEditTime: 2023-03-22 18:52:04
+ * @Date: 2023-03-22 18:52:51
+ * @LastEditTime: 2023-03-30 18:46:54
  * @LastEditors: Libra
- * @Description:
- * @FilePath: /libra-vue3-all-in-one-template/src/store/modules/user.ts
+ * @Description: user store
  */
 import { defineStore } from 'pinia'
 

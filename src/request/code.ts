@@ -1,9 +1,9 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-22 15:47:47
+ * @LastEditTime: 2023-03-30 18:42:38
  * @LastEditors: Libra
- * @Description:返回码
- * @FilePath: /libra-vue3-all-in-one-template/src/request/code.ts
+ * @Description: 返回码处理
  */
 import type { ResponseData } from '.'
 import { ElMessage } from 'element-plus'
