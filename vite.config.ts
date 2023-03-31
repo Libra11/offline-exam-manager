@@ -1,3 +1,10 @@
+/*
+ * @Author: Libra
+ * @Date: 2023-03-07 18:03:36
+ * @LastEditTime: 2023-03-31 10:51:36
+ * @LastEditors: Libra
+ * @Description:
+ */
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
@@ -18,7 +25,16 @@ export default defineConfig({
 			resolvers: [ElementPlusResolver()],
 		}),
 		Components({
-			resolvers: [ElementPlusResolver()],
+			// allow auto load markdown components under `./src/components/`
+			extensions: ['vue', 'md'],
+			// allow auto import and register components used in markdown
+			include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
+			resolvers: [
+				ElementPlusResolver({
+					importStyle: 'sass',
+				}),
+			],
+			dts: 'src/components.d.ts',
 		}),
 		viteMockServe({
 			mockPath: 'mock',
@@ -27,6 +43,13 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url)),
+		},
+	},
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `@use "./src/style/element/index.scss" as *;`,
+			},
 		},
 	},
 })
