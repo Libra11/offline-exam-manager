@@ -1,7 +1,7 @@
 <!--
  * @Author: Libra
  * @Date: 2023-03-30 18:29:45
- * @LastEditTime: 2023-03-31 15:53:16
+ * @LastEditTime: 2023-06-05 14:43:46
  * @LastEditors: Libra
  * @Description: 全局弹窗组件 
 -->
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
 	title: {
