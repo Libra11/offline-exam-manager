@@ -8,12 +8,13 @@ import '@vue/runtime-core'
 export {}
 
 declare module '@vue/runtime-core' {
-  export interface GlobalComponents {
-    CustomDialog: typeof import('./components/CustomDialog.vue')['default']
-    CustomHeader: typeof import('./components/CustomHeader.vue')['default']
-    ElButton: typeof import('element-plus/es')['ElButton']
-    ElDialog: typeof import('element-plus/es')['ElDialog']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-  }
+	export interface GlobalComponents {
+		CustomDialog: typeof import('./components/CustomDialog.vue')['default']
+		CustomHeader: typeof import('./components/CustomHeader.vue')['default']
+		ElButton: typeof import('element-plus/es')['ElButton']
+		ElDialog: typeof import('element-plus/es')['ElDialog']
+		ElTag: typeof import('element-plus/es')['ElTag']
+		RouterLink: typeof import('vue-router')['RouterLink']
+		RouterView: typeof import('vue-router')['RouterView']
+	}
 }

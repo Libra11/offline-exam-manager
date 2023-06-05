@@ -1,3 +1,9 @@
+/*
+ * @Author: Libra
+ * @Date: 2023-06-05 14:23:53
+ * @LastEditors: Libra
+ * @Description: 
+ */
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
 
@@ -30,7 +36,6 @@ module.exports = {
 		'no-var': 'error',
 		'no-unused-vars': 'error',
 		eqeqeq: ['error', 'always'],
-		'no-console': 'error',
 		'no-debugger': 'error',
 		'no-alert': 'error',
 		'no-else-return': 'error',
