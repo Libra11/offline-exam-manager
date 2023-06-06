@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-07 18:03:36
- * @LastEditTime: 2023-06-05 14:48:52
+ * @LastEditTime: 2023-06-05 15:42:18
  * @LastEditors: Libra
  * @Description:
  */
@@ -15,6 +15,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { viteMockServe } from 'vite-plugin-mock'
 import electron from 'vite-plugin-electron'
+import renderer from 'vite-plugin-electron-renderer'
 
 // https://vitejs.dev/config/
 export default ({ command }: ConfigEnv): UserConfigExport => {
@@ -54,6 +55,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
 					},
 				},
 			}),
+			renderer(),
 		],
 		resolve: {
 			alias: {

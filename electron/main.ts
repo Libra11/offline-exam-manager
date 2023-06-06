@@ -1,12 +1,13 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-30 10:44:24
- * @LastEditTime: 2023-06-05 14:30:02
+ * @LastEditTime: 2023-06-05 16:19:40
  * @LastEditors: Libra
  * @Description:/*
  */
 import path from 'path'
 import { app, BrowserWindow } from 'electron'
+import createSocket from './socket'
 
 const isDev = process.env.VITE_DEV_SERVER_URL
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
@@ -26,6 +27,7 @@ function createWindow() {
 	if (isDev) {
 		mainWindow.webContents.openDevTools()
 	}
+	createSocket(mainWindow.webContents)
 }
 
 app.whenReady().then(() => {
