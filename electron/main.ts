@@ -1,12 +1,12 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-30 10:44:24
- * @LastEditTime: 2023-06-12 16:50:38
+ * @LastEditTime: 2023-06-12 18:15:36
  * @LastEditors: Libra
  * @Description:/*
  */
 import path from 'path'
-import { app, BrowserWindow, protocol } from 'electron'
+import { app, BrowserWindow, protocol, Tray } from 'electron'
 import createSocket from './socket'
 import remote from '@electron/remote/main'
 
@@ -31,13 +31,13 @@ const isDev = process.env.VITE_DEV_SERVER_URL
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 let mainWindow: BrowserWindow | null = null
 
-// function createTray() {
-// 	const tray = new Tray('./image/test.png')
-// 	tray.setToolTip('Miguu')
-// 	tray.on('click', () => {
-// 		mainWindow && mainWindow.show()
-// 	})
-// }
+function createTray() {
+	const tray = new Tray('electron/image/test.png')
+	tray.setToolTip('Miguu')
+	tray.on('click', () => {
+		mainWindow && mainWindow.show()
+	})
+}
 
 function createWindow() {
 	mainWindow = new BrowserWindow({
@@ -51,7 +51,7 @@ function createWindow() {
 	})
 
 	remote.enable(mainWindow.webContents)
-	mainWindow.loadURL(isDev ? 'http://localhost:5174' : `file://${path.join(__dirname, '../dist/index.html')}`)
+	mainWindow.loadURL(isDev ? 'http://localhost:5173' : `file://${path.join(__dirname, '../dist/index.html')}`)
 	if (isDev) {
 		mainWindow.webContents.openDevTools()
 	}
@@ -59,7 +59,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-	// createTray()
+	createTray()
 	createWindow()
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) {
