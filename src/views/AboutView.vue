@@ -1,7 +1,7 @@
 <!--
  * @Author: Libra
  * @Date: 2023-03-07 14:15:32
- * @LastEditTime: 2023-06-08 14:20:15
+ * @LastEditTime: 2023-08-16 11:58:33
  * @LastEditors: Libra
  * @Description: 
 -->
@@ -22,22 +22,21 @@ import { ElMessage } from 'element-plus'
 import { ipcRenderer, type IpcRendererEvent } from 'electron'
 import { app } from '@electron/remote'
 import { MessageType } from '@/enum'
+import storage from '@/utils/storage'
+import type { IP } from 'myTypes'
 
 let socket: Socket | null = null
 let isSocketConnected = ref(false)
 let hostIp: string = ''
 
 onMounted(() => {
-	const ip = localStorage.getItem('ip')
-	if (ip) {
-		connectSocket(JSON.parse(ip).serverIp, JSON.parse(ip).localIp)
-	}
+	const ip = storage.getItem<IP>('ip')
+	ip && connectSocket(ip.serverIp, ip.localIp)
 	ipcRenderer.on('ip', (event: IpcRendererEvent, ip: string) => {
 		const ipObj = JSON.parse(ip)
 		hostIp = ipObj.serverIp
-		localStorage.setItem('ip', ip)
+		storage.setItem('ip', ip)
 		const localIp = ipObj.localIp
-		console.log('hostIp', hostIp)
 		connectSocket(hostIp, localIp)
 	})
 })
@@ -67,30 +66,30 @@ const connectSocket = (hostIp: string, localIp: string) => {
 				version: getClientVersion(),
 			},
 		})
-		ElMessage.success('连接socket成功')
+		ElMessage.success('socket connected')
 	})
 
 	manager.on('reconnect_attempt', () => {
-		ElMessage.warning('socket重连中')
+		ElMessage.warning('socket reconnecting...')
 	})
 
 	manager.on('reconnect_failed', () => {
-		ElMessage.error('socket重连失败')
+		ElMessage.error('socket reconnect failed')
 		// open a dialog to let user choose whether to reconnect
 		// TODO
 	})
 
 	manager.on('reconnect', () => {
-		ElMessage.success('socket重连成功')
+		ElMessage.success('socket reconnect success')
 	})
 
 	manager.on('reconnect_error', (error: any) => {
-		ElMessage.error('socket重连错误', error)
+		ElMessage.error('socket reconnect error', error)
 	})
 
 	socket.on('disconnect', () => {
 		isSocketConnected.value = false
-		ElMessage.error('socket断开连接')
+		ElMessage.error('socket disconnected')
 	})
 }
 

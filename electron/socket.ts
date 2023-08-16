@@ -9,6 +9,7 @@ import type { Socket } from 'socket.io'
 import { MessageType } from '../src/enum'
 import { Server } from 'socket.io'
 import { client_websocket_port } from './config'
+import type { IMessage, IP } from 'myTypes'
 
 const createSocket = (webContents: WebContents) => {
 	const io = new Server()
@@ -20,7 +21,7 @@ const createSocket = (webContents: WebContents) => {
 		socket.on('disconnect', () => {
 			console.log('socket disconnected', socket.id)
 		})
-		socket.on('message', (msg: any) => {
+		socket.on('message', (msg: IMessage<IP>) => {
 			if (msg.type === MessageType.ADMIN_CONNECT) {
 				webContents.send('ip', JSON.stringify(msg.data))
 			}
