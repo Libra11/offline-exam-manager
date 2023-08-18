@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-06 10:21:05
- * @LastEditTime: 2023-03-30 18:46:41
+ * @LastEditTime: 2023-08-18 10:40:15
  * @LastEditors: Libra
  * @Description: 路由
  */
@@ -12,12 +12,17 @@ import { useToken } from '@/composables/useToken'
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/login',
+		redirect: '/test',
 	},
 	{
 		path: '/login',
 		name: 'Login',
 		component: () => import('../views/AboutView.vue'),
+	},
+	{
+		path: '/test',
+		name: 'Test',
+		component: () => import('../views/TestView.vue'),
 	},
 ]
 
@@ -37,7 +42,8 @@ router.beforeEach((to, from, next) => {
 		next()
 	} else {
 		// 如果 token 不存在且不在白名单中，重定向到首页
-		next(`/login?redirect=${to.path}`)
+		// next(`/login?redirect=${to.path}`)
+		next(`/test`)
 	}
 })
 

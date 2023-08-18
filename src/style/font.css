@@ -1,0 +1,7 @@
+/* 定义字体 */
+@font-face {
+	font-family: 'digital';
+	src: url('@/assets/fonts/digital.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
