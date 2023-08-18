@@ -4,18 +4,18 @@
  * @LastEditors: Libra
  * @Description:
  */
-import type { WebContents } from 'electron'
+import { app, type WebContents } from 'electron'
 import type { Socket } from 'socket.io'
 import { MessageType } from '../src/enum'
 import { Server } from 'socket.io'
 import { client_websocket_port } from './config'
 import type { IMessage, IP } from 'myTypes'
+import os from 'os'
 
 const createSocket = (webContents: WebContents) => {
 	const io = new Server()
 
 	io.on('connection', (socket: Socket) => {
-		console.log('socket connected')
 		// tell server my status
 		tellMyStatus(socket)
 		socket.on('disconnect', () => {
@@ -34,7 +34,9 @@ const tellMyStatus = (socket: Socket) => {
 	socket.emit('message', {
 		type: MessageType.CLIENT_STATUS,
 		data: {
-			status: '测试状态',
+			useStatus: '测试状态',
+			version: app.getVersion(),
+			os: os.release(),
 		},
 	})
 }

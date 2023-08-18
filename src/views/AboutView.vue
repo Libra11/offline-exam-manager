@@ -1,7 +1,7 @@
 <!--
  * @Author: Libra
  * @Date: 2023-03-07 14:15:32
- * @LastEditTime: 2023-08-16 11:58:33
+ * @LastEditTime: 2023-08-18 10:12:11
  * @LastEditors: Libra
  * @Description: 
 -->
@@ -21,7 +21,6 @@ import { Manager, Socket } from 'socket.io-client'
 import { ElMessage } from 'element-plus'
 import { ipcRenderer, type IpcRendererEvent } from 'electron'
 import { app } from '@electron/remote'
-import { MessageType } from '@/enum'
 import storage from '@/utils/storage'
 import type { IP } from 'myTypes'
 
@@ -50,6 +49,10 @@ const connectSocket = (hostIp: string, localIp: string) => {
 	socket?.disconnect()
 	const manager = new Manager(`http://${hostIp}:${4001}`, {
 		reconnection: true,
+		query: {
+			ip: localIp,
+			version: getClientVersion(),
+		},
 		reconnectionAttempts: 5,
 	})
 	socket = manager.socket('/')
@@ -57,16 +60,7 @@ const connectSocket = (hostIp: string, localIp: string) => {
 	// client-side
 	socket.on('connect', () => {
 		isSocketConnected.value = true
-		socket?.emit('message', {
-			type: MessageType.CLIENT_INFO,
-			data: {
-				id: socket.id,
-				ip: localIp,
-				status: 'online',
-				version: getClientVersion(),
-			},
-		})
-		ElMessage.success('socket connected')
+		ElMessage.success('连接socket成功')
 	})
 
 	manager.on('reconnect_attempt', () => {

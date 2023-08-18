@@ -1,12 +1,12 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-30 10:44:24
- * @LastEditTime: 2023-06-12 18:15:36
+ * @LastEditTime: 2023-06-15 11:07:57
  * @LastEditors: Libra
  * @Description:/*
  */
 import path from 'path'
-import { app, BrowserWindow, protocol, Tray } from 'electron'
+import { app, BrowserWindow, protocol, Tray, powerSaveBlocker } from 'electron'
 import createSocket from './socket'
 import remote from '@electron/remote/main'
 
@@ -29,6 +29,7 @@ protocol.registerSchemesAsPrivileged([
 
 const isDev = process.env.VITE_DEV_SERVER_URL
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+powerSaveBlocker.start('prevent-display-sleep')
 let mainWindow: BrowserWindow | null = null
 
 function createTray() {
