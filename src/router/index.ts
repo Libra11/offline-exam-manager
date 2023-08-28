@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-06 10:21:05
- * @LastEditTime: 2023-08-18 10:40:15
+ * @LastEditTime: 2023-08-28 13:07:23
  * @LastEditors: Libra
  * @Description: 路由
  */
@@ -12,12 +12,12 @@ import { useToken } from '@/composables/useToken'
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/test',
+		redirect: '/login',
 	},
 	{
 		path: '/login',
 		name: 'Login',
-		component: () => import('../views/AboutView.vue'),
+		component: () => import('../views/LoginView.vue'),
 	},
 	{
 		path: '/test',

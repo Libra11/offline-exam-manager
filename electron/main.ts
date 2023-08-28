@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-30 10:44:24
- * @LastEditTime: 2023-06-15 11:07:57
+ * @LastEditTime: 2023-08-28 14:56:02
  * @LastEditors: Libra
  * @Description:/*
  */
@@ -31,13 +31,15 @@ const isDev = process.env.VITE_DEV_SERVER_URL
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 powerSaveBlocker.start('prevent-display-sleep')
 let mainWindow: BrowserWindow | null = null
+let isHide = true
 
 function createTray() {
 	const tray = new Tray('electron/image/test.png')
-	tray.setToolTip('Miguu')
 	tray.on('click', () => {
-		mainWindow && mainWindow.show()
+		isHide ? mainWindow?.show() : mainWindow?.hide()
+		isHide = !isHide
 	})
+	tray.setToolTip('国考云')
 }
 
 function createWindow() {
@@ -51,6 +53,7 @@ function createWindow() {
 		},
 	})
 
+	mainWindow.hide()
 	remote.enable(mainWindow.webContents)
 	mainWindow.loadURL(isDev ? 'http://localhost:5173' : `file://${path.join(__dirname, '../dist/index.html')}`)
 	if (isDev) {
@@ -72,3 +75,7 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
 	app.quit()
 })
+
+export const isVisible = () => {
+	return mainWindow?.isVisible()
+}
