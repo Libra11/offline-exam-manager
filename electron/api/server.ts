@@ -4,7 +4,7 @@
  * @LastEditors: Libra
  * @Description: server send message to client by socket
  */
-import { sendMessageToClients } from '@ele/socket'
+import { sendMessageToClients } from '../socket'
 import fs from 'fs'
 // send exam zip file to client
 const sendExamZipFile = () => {

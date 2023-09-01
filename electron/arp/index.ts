@@ -1,11 +1,11 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-17 09:44:22
- * @LastEditTime: 2023-08-31 14:18:38
+ * @LastEditTime: 2023-09-01 14:05:20
  * @LastEditors: Libra
  * @Description: arp
  */
-import { getLocalIpAddress } from '@ele/util'
+import { getLocalIpAddress } from '../util'
 import io, { Socket } from 'socket.io-client'
 import { client_websocket_port } from '../config'
 import type { WebContents } from 'electron'

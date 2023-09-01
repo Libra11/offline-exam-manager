@@ -1,6 +1,6 @@
-import { sendExamZipFile } from '@ele/api/server'
-import { discoverHosts, sendLocalIptoClient } from '@ele/arp'
-import createSocket from '@ele/socket'
+import { sendExamZipFile } from '../api/server'
+import { discoverHosts, sendLocalIptoClient } from '../arp'
+import createSocket from '../socket'
 import type { BrowserWindow, IpcMain } from 'electron'
 
 /*
