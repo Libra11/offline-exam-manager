@@ -9,13 +9,12 @@
 declare module 'animejs/lib/anime.es.js'
 
 declare module 'myTypes' {
-	export interface IP {
-		serverIp: string
-		localIp: string
-	}
-
-	export interface IMessage<T> {
-		type: string
-		data: T
+	interface ClientItem {
+		ip: string
+		os: string
+		seatNum: number
+		useStatus: 'free' | 'used'
+		onlineStatus: 'online' | 'offline' | 'launched'
+		version: string
 	}
 }

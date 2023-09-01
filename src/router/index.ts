@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-06 10:21:05
- * @LastEditTime: 2023-08-28 13:07:23
+ * @LastEditTime: 2023-08-31 14:12:17
  * @LastEditors: Libra
  * @Description: 路由
  */
@@ -12,7 +12,7 @@ import { useToken } from '@/composables/useToken'
 const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/login',
+		redirect: '/test',
 	},
 	{
 		path: '/login',

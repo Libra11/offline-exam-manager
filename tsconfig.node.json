@@ -1,6 +1,6 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.node.json",
-	"include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*", "electron/**/*", "src/enum", "env.d.ts"],
+	"include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*", "src/enum", "env.d.ts"],
 	"compilerOptions": {
 		"ignoreDeprecations": "5.0",
 		"composite": true,

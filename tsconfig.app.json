@@ -1,13 +1,14 @@
 {
 	"extends": "@vue/tsconfig/tsconfig.web.json",
-	"include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/enum", "src/types"],
+	"include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/enum", "electron/**/*.ts"],
 	"exclude": ["src/**/__tests__/*"],
 	"compilerOptions": {
 		"ignoreDeprecations": "5.0",
 		"composite": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@ele/*": ["./electron/*"]
 		}
 	}
 }

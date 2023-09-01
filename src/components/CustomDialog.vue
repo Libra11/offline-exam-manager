@@ -1,7 +1,7 @@
 <!--
  * @Author: Libra
  * @Date: 2023-03-30 18:29:45
- * @LastEditTime: 2023-06-05 14:43:46
+ * @LastEditTime: 2023-08-31 13:55:22
  * @LastEditors: Libra
  * @Description: 全局弹窗组件 
 -->
@@ -15,7 +15,7 @@
 		@update:model-value="updateVisible"
 		@open="handleOpen"
 	>
-		<slot></slot>
+		<slot />
 		<template #footer>
 			<div class="flex-c">
 				<slot name="default-footer" v-if="useDefaultFooter">

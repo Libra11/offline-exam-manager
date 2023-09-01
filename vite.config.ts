@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-03-07 18:03:36
- * @LastEditTime: 2023-08-16 11:16:36
+ * @LastEditTime: 2023-08-31 14:00:50
  * @LastEditors: Libra
  * @Description:
  */
@@ -60,6 +60,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
 		resolve: {
 			alias: {
 				'@': fileURLToPath(new URL('./src', import.meta.url)),
+				'@ele': fileURLToPath(new URL('./electron', import.meta.url)),
 			},
 		},
 		css: {
