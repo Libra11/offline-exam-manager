@@ -55,6 +55,7 @@
 					</template>
 				</el-dropdown>
 				<el-button @click="showAddMachineDialog = true" type="primary" class="ml-2">添加考试机器</el-button>
+				<el-button @click="sendZip" type="primary" class="ml-2">分发zip</el-button>
 			</div>
 		</div>
 		<el-table :data="clients" style="width: 100%; margin-top: 0.5rem">
@@ -147,23 +148,37 @@ const addMachine = () => {
 
 // find all clients that match the ip segment & have mac address
 const findClients = () => {
-	ipcRenderer.send('find-clients', JSON.stringify(ip.value))
+	ipcRenderer.send('message', {
+		type: 'find-clients',
+		message: JSON.stringify(ip.value),
+	})
 }
 
 // create socket server
 const createServer = () => {
-	ipcRenderer.send('create-server')
+	ipcRenderer.send('message', {
+		type: 'create-server',
+		message: null,
+	})
+}
+
+// send zip to clients
+const sendZip = () => {
+	ipcRenderer.send('message', {
+		type: 'send-exam-file',
+		message: null,
+	})
 }
 
 // send manager machine ip to clients, so that clients can connect to manager
 const connectClients = () => {
-	ipcRenderer.send(
-		'connect-clients',
-		JSON.stringify({
+	ipcRenderer.send('message', {
+		type: 'connect-clients',
+		message: JSON.stringify({
 			localIp,
 			clients: selectedClient.map((item: ClientItem) => item.ip),
-		})
-	)
+		}),
+	})
 }
 
 /**

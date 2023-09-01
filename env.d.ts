@@ -17,4 +17,9 @@ declare module 'myTypes' {
 		onlineStatus: 'online' | 'offline' | 'launched'
 		version: string
 	}
+	type ServerMessageType = 'exam-file'
+	interface RequestMessage {
+		url: string
+		query: Record<string, any>
+	}
 }
