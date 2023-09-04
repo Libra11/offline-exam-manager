@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
 		CustomDialog: typeof import('./components/CustomDialog.vue')['default']
 		CustomHeader: typeof import('./components/CustomHeader.vue')['default']
 		ElButton: typeof import('element-plus/es')['ElButton']
+		ElDialog: typeof import('element-plus/es')['ElDialog']
 		ElDropdown: typeof import('element-plus/es')['ElDropdown']
 		ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
 		ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']

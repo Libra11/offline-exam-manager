@@ -23,8 +23,10 @@ const handleMsg = (ipcMain: IpcMain, win: BrowserWindow | null) => {
 			case 'create-server':
 				if (!win) return
 				createSocket(win.webContents)
+				break
 			case 'send-exam-file':
 				sendExamZipFile()
+				break
 			default:
 				break
 		}

@@ -8,7 +8,7 @@ import { sendMessageToClients } from '../socket'
 import fs from 'fs'
 // send exam zip file to client
 const sendExamZipFile = () => {
-	const fileData = fs.readFileSync('test.zip')
+	const fileData = fs.readFileSync('exam.zip')
 	sendMessageToClients('exam-file', fileData)
 }
 

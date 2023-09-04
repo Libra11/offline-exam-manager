@@ -1,7 +1,7 @@
 /*
  * @Author: Libra
  * @Date: 2023-05-30 10:44:24
- * @LastEditTime: 2023-09-01 10:57:34
+ * @LastEditTime: 2023-09-01 14:30:18
  * @LastEditors: Libra
  * @Description:/*
  */
@@ -32,6 +32,8 @@ function createWindow() {
 
 app.whenReady().then(() => {
 	createWindow()
+	// handle renderer thread message
+	handleMsg(ipcMain, win)
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow()
@@ -42,6 +44,3 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
 	app.quit()
 })
-
-// handle renderer thread message
-handleMsg(ipcMain, win)
