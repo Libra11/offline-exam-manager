@@ -15,6 +15,7 @@ dist-ssr
 dist-electron
 release
 coverage
+static/*
 *.local
 
 /cypress/videos/
