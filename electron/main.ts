@@ -8,6 +8,7 @@
 import path from 'path'
 import { app, BrowserWindow, ipcMain, Menu, powerSaveBlocker } from 'electron'
 import handleMsg from './message/renderer2main'
+import { createHttpServer } from './http'
 
 const isDev = process.env.VITE_DEV_SERVER_URL
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
@@ -34,6 +35,7 @@ app.whenReady().then(() => {
 	createWindow()
 	// handle renderer thread message
 	handleMsg(ipcMain, win)
+	createHttpServer()
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) {
 			createWindow()

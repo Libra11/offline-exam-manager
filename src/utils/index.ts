@@ -6,6 +6,14 @@
  * @Description: util
  */
 import os from 'os'
+import { ipcRenderer } from 'electron'
+import type { IMessage } from 'myTypes'
+
+// render thread send message to main thread
+const sendRenderMessage = (message: IMessage<any>) => {
+	ipcRenderer.send('message', JSON.stringify(message))
+}
+
 function getLocalIpAddress() {
 	const interfaces = os.networkInterfaces()
 	for (const devName in interfaces) {
@@ -19,4 +27,4 @@ function getLocalIpAddress() {
 		}
 	}
 }
-export { getLocalIpAddress }
+export { getLocalIpAddress, sendRenderMessage }

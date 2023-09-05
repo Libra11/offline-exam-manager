@@ -6,14 +6,14 @@
  */
 import type { Socket } from 'socket.io'
 import { updateClientInfo } from '../arp'
-import type { WebContents } from 'electron'
-import type { RequestMessage } from 'myTypes'
+import type { BrowserWindow } from 'electron'
+import type { IRequestMessage } from 'myTypes'
 
-const handleApi = (message: RequestMessage, callback: any, socket: Socket, webContents: WebContents) => {
+const handleApi = (message: IRequestMessage, callback: any, socket: Socket, win: BrowserWindow) => {
 	// message.url
 	switch (message.url) {
 		case '/api/update/client/status':
-			updateClientInfo(socket.handshake.query, webContents, message.query.onlineStatus)
+			updateClientInfo(socket.handshake.query, win, message.query.onlineStatus)
 			callback({
 				code: 200,
 				data: 'success',

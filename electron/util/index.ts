@@ -6,6 +6,20 @@
  * @Description: util
  */
 import os from 'os'
+import type { IMessage } from 'myTypes'
+import type { Socket as SocketServer } from 'socket.io'
+import type { BrowserWindow } from 'electron'
+
+// socket send message
+const sendMessage = (socket: SocketServer, message: IMessage<any>) => {
+	socket.emit('message', message)
+}
+
+// main thread send message to render thread
+const sendMainMessage = (win: BrowserWindow, message: IMessage<any>) => {
+	win.webContents.send('message', message)
+}
+
 function getLocalIpAddress() {
 	const interfaces = os.networkInterfaces()
 	for (const devName in interfaces) {
@@ -19,4 +33,4 @@ function getLocalIpAddress() {
 		}
 	}
 }
-export { getLocalIpAddress }
+export { getLocalIpAddress, sendMessage, sendMainMessage }

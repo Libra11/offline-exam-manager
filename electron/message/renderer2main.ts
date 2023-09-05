@@ -1,4 +1,5 @@
-import { sendExamZipFile } from '../api/server'
+import type { IMessage } from 'myTypes'
+import { sendExamZipFile, updateClients } from '../api/server'
 import { discoverHosts, sendLocalIptoClient } from '../arp'
 import createSocket from '../socket'
 import type { BrowserWindow, IpcMain } from 'electron'
@@ -10,22 +11,26 @@ import type { BrowserWindow, IpcMain } from 'electron'
  * @Description: renderer thread send message to main thread
  */
 const handleMsg = (ipcMain: IpcMain, win: BrowserWindow | null) => {
-	ipcMain.on('message', (event, arg) => {
-		switch (arg.type) {
-			case 'find-clients':
+	ipcMain.on('message', (_, arg: string) => {
+		const msg: IMessage<any> = JSON.parse(arg)
+		switch (msg.type) {
+			case 'FIND_CLIENTS':
 				if (!win) return
-				discoverHosts(win.webContents, JSON.parse(arg.message))
+				discoverHosts(win, msg.data)
 				break
-			case 'connect-clients':
-				const { localIp, clients } = JSON.parse(arg.message)
+			case 'CONNECT_CLIENTS':
+				const { localIp, clients } = msg.data
 				sendLocalIptoClient(localIp, clients)
 				break
-			case 'create-server':
+			case 'CREATE_SERVER':
 				if (!win) return
-				createSocket(win.webContents)
+				createSocket(win)
 				break
-			case 'send-exam-file':
+			case 'SEND_EXAM_FILE':
 				sendExamZipFile()
+				break
+			case 'UPDATE_CLIENTS':
+				updateClients()
 				break
 			default:
 				break

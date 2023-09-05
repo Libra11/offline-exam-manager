@@ -8,6 +8,7 @@ import { sendMessageToClients } from '../socket'
 import fs from 'fs'
 // send exam zip file to client
 const sendExamZipFile = () => {
+	console.log('send exam zip file')
 	const file = fs.readFileSync('exam.zip')
 	// 将文件分成大小为 16KB 的片段
 	const chunkSize = 1 * 1024
@@ -19,8 +20,7 @@ const sendExamZipFile = () => {
 		const start = currentChunk * chunkSize
 		const end = Math.min(start + chunkSize, file.length)
 		const chunk = file.slice(start, end)
-		// sendMessageToClients('exam-file', fileData)
-		sendMessageToClients('exam-file', {
+		sendMessageToClients('EXAM_FILE', {
 			chunk,
 			currentChunk,
 			numChunks,
@@ -28,7 +28,11 @@ const sendExamZipFile = () => {
 		currentChunk++
 	}
 	// send end message
-	sendMessageToClients('exam-file', 'end')
+	sendMessageToClients('EXAM_FILE', 'end')
 }
 
-export { sendExamZipFile }
+const updateClients = () => {
+	sendMessageToClients('UPDATE_CLIENTS', null)
+}
+
+export { sendExamZipFile, updateClients }

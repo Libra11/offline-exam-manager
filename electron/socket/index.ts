@@ -8,14 +8,15 @@
 import { Server, Socket } from 'socket.io'
 import { server_websocket_port } from '../config'
 import { updateClientInfo } from '../arp'
-import type { WebContents } from 'electron'
+import type { BrowserWindow } from 'electron'
 import handleApi from '../api'
-import type { RequestMessage, ServerMessageType } from 'myTypes'
+import type { IRequestMessage, ServerMessageType } from 'myTypes'
+import { sendMessage } from '../util'
 
 let io: Server | null = null
 const sockets = new Map<string, Socket>()
 
-const createSocket = (webContents: WebContents) => {
+const createSocket = (win: BrowserWindow) => {
 	if (io) return
 	io = new Server({
 		/* options */
@@ -31,21 +32,26 @@ const createSocket = (webContents: WebContents) => {
 		socket.on('disconnect', () => {
 			console.log('socket disconnected', socket.id)
 			sockets.delete(ip)
-			updateClientInfo(socket.handshake.query, webContents, 'offline')
+			updateClientInfo(socket.handshake.query, win, 'offline')
 		})
-		socket.on('message', (message: RequestMessage, callback) => {
+		socket.on('request', (message: IRequestMessage, callback) => {
 			console.log('socket message', message)
-			handleApi(message, callback, socket, webContents)
-			webContents.send('message', JSON.stringify(message))
+			handleApi(message, callback, socket, win)
+		})
+		socket.on('message', (message) => {
+			console.log('socket message', message)
 		})
 	})
 	io.listen(server_websocket_port)
 }
 
 // send message to all clients
-export function sendMessageToClients(type: ServerMessageType, message: any) {
+export function sendMessageToClients(type: ServerMessageType, data: any) {
 	sockets.forEach((socket) => {
-		socket.emit(type, message)
+		sendMessage(socket, {
+			type,
+			data,
+		})
 	})
 }
 export default createSocket

@@ -56,6 +56,7 @@
 				</el-dropdown>
 				<el-button @click="showAddMachineDialog = true" type="primary" class="ml-2">添加考试机器</el-button>
 				<el-button @click="sendZip" type="primary" class="ml-2">分发zip</el-button>
+				<el-button @click="updateClients" type="primary" class="ml-2">更新考试机</el-button>
 			</div>
 		</div>
 		<el-table :data="clients" style="width: 100%; margin-top: 0.5rem">
@@ -74,19 +75,20 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref, toRaw, onBeforeUnmount, watch } from 'vue'
-import { ElMessage, ElTable } from 'element-plus'
+import { ElTable } from 'element-plus'
 import { ipcRenderer } from 'electron'
-import type { IpcRendererEvent } from 'electron'
-import { getLocalIpAddress } from '@/utils'
+import { getLocalIpAddress, sendRenderMessage } from '@/utils'
 import CusDialog from '@/components/CustomDialog.vue'
 import type { ClientItem } from 'myTypes'
-import { clientStore } from '@/store/modules/client'
+import { ClientStore } from '@/store/modules/client'
 import { ArrowDown } from '@element-plus/icons-vue'
+import type { IMessage } from 'myTypes'
 
 const showAddMachineDialog = ref(false)
 
 const allClient = ref(new Map<string, ClientItem>())
 const clients = ref<ClientItem[]>([])
+const clientStore = ClientStore()
 const ip = ref({
 	first: 0,
 	second: 0,
@@ -104,8 +106,6 @@ onMounted(async () => {
 })
 onBeforeUnmount(() => {
 	ipcRenderer.removeAllListeners('message')
-	ipcRenderer.removeAllListeners('host')
-	ipcRenderer.removeAllListeners('host-update')
 })
 
 watch(
@@ -129,13 +129,18 @@ const getLocalIpSgement = () => {
 }
 
 const ipcRendererEvent = () => {
-	ipcRenderer.on('message', (event: IpcRendererEvent, arg: string) => {
-		ElMessage.success(`收到客户端消息：${arg}`)
-	})
-	ipcRenderer.on('host', (event: IpcRendererEvent, arg: string) => {
-		const data = JSON.parse(arg)
-		allClient.value.set(data.ip, data)
-		console.log('allClient', allClient.value)
+	ipcRenderer.on('message', (_, msg: IMessage<any>) => {
+		switch (msg.type) {
+			case 'HOST':
+				const data = msg.data
+				allClient.value.set(data.ip, data)
+				console.log('allClient', allClient.value)
+				break
+			case 'UPDATE_CLIENT_INFO':
+				const client = msg.data
+				clientStore.updateData(client)
+				break
+		}
 	})
 }
 
@@ -148,36 +153,46 @@ const addMachine = () => {
 
 // find all clients that match the ip segment & have mac address
 const findClients = () => {
-	ipcRenderer.send('message', {
-		type: 'find-clients',
-		message: JSON.stringify(ip.value),
+	sendRenderMessage({
+		type: 'FIND_CLIENTS',
+		data: ip.value,
 	})
 }
 
 // create socket server
 const createServer = () => {
-	ipcRenderer.send('message', {
-		type: 'create-server',
-		message: null,
+	sendRenderMessage({
+		type: 'CREATE_SERVER',
+		data: null,
 	})
 }
 
 // send zip to clients
 const sendZip = () => {
-	ipcRenderer.send('message', {
-		type: 'send-exam-file',
-		message: null,
+	sendRenderMessage({
+		type: 'SEND_EXAM_FILE',
+		data: null,
+	})
+}
+
+// update clients
+const updateClients = () => {
+	// TODO download new version from server
+	// send update message to clients
+	sendRenderMessage({
+		type: 'UPDATE_CLIENTS',
+		data: null,
 	})
 }
 
 // send manager machine ip to clients, so that clients can connect to manager
 const connectClients = () => {
-	ipcRenderer.send('message', {
-		type: 'connect-clients',
-		message: JSON.stringify({
+	sendRenderMessage({
+		type: 'CONNECT_CLIENTS',
+		data: {
 			localIp,
 			clients: selectedClient.map((item: ClientItem) => item.ip),
-		}),
+		},
 	})
 }
 

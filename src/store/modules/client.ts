@@ -12,11 +12,9 @@
  */
 import clients from '@/db/client'
 import type { ClientItem } from 'myTypes'
-import { ipcRenderer } from 'electron'
-import type { IpcRendererEvent } from 'electron'
 import { defineStore } from 'pinia'
 
-export const useClientStore = defineStore({
+export const ClientStore = defineStore({
 	id: 'pure-client',
 	state: () => ({
 		data: Array<ClientItem>(),
@@ -50,9 +48,4 @@ export const useClientStore = defineStore({
 			clients.updateClient(data)
 		},
 	},
-})
-
-export const clientStore = useClientStore()
-ipcRenderer.on('host-update', (event: IpcRendererEvent, arg: string) => {
-	clientStore.updateData(JSON.parse(arg))
 })

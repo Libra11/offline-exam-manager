@@ -5,14 +5,13 @@
  * @LastEditors: Libra
  * @Description: arp
  */
-import { getLocalIpAddress } from '../util'
+import { getLocalIpAddress, sendMainMessage } from '../util'
 import io, { Socket } from 'socket.io-client'
 import { client_websocket_port } from '../config'
-import type { WebContents } from 'electron'
-import { MessageType } from '../../src/enum'
+import type { BrowserWindow } from 'electron'
 import find from 'local-devices'
 import type { IDevice } from 'local-devices'
-import type { ClientItem } from 'myTypes'
+import type { ClientItem, IMessage } from 'myTypes'
 
 const sockets = new Map<string, Socket>()
 
@@ -21,7 +20,7 @@ interface Host {
 	localIP: string
 }
 
-function discoverHosts(webContents: WebContents, ipObj: any) {
+function discoverHosts(win: BrowserWindow, ipObj: any) {
 	const localIP = getLocalIpAddress()
 	if (!localIP) return
 	const subnet = ipObj.first + '.' + ipObj.second + '.' + ipObj.third
@@ -31,26 +30,33 @@ function discoverHosts(webContents: WebContents, ipObj: any) {
 	}).then((devices: Array<IDevice>) => {
 		devices.forEach((device: IDevice) => {
 			const host: Host = { ip: device.ip, localIP }
-			notifyClients(host, webContents)
+			notifyClients(host, win)
 		})
+	})
+}
+
+const sendMessageToClients = (socket: Socket, message: IMessage<any>) => {
+	socket.emit('message', {
+		type: message.type,
+		data: message.data,
 	})
 }
 
 export function sendLocalIptoClient(localIp: string, clients: Array<string>) {
 	clients.forEach((ip) => {
 		const socket = sockets.get(ip)
-		socket &&
-			socket.emit('message', {
-				type: MessageType.ADMIN_CONNECT,
-				data: {
-					serverIp: localIp,
-					localIp: ip,
-				},
-			})
+		if (!socket) return
+		sendMessageToClients(socket, {
+			type: 'IP',
+			data: {
+				serverIp: localIp,
+				localIp: ip,
+			},
+		})
 	})
 }
 
-function notifyClients(host: Host, webContents: WebContents) {
+function notifyClients(host: Host, win: BrowserWindow) {
 	const socket = io(`http://${host.ip}:${client_websocket_port}`)
 	socket.on('error', (err) => {
 		console.log('socket error', err)
@@ -65,9 +71,9 @@ function notifyClients(host: Host, webContents: WebContents) {
 	socket.on('disconnect', () => {
 		console.log('socket disconnected')
 	})
-	socket.on('message', (message) => {
+	socket.on('message', (message: IMessage<any>) => {
 		console.log(message)
-		if (message.type === MessageType.CLIENT_STATUS) {
+		if (message.type === 'CLIENT_STATUS') {
 			const { useStatus, version, os } = message.data
 			const h: ClientItem = {
 				os,
@@ -77,18 +83,24 @@ function notifyClients(host: Host, webContents: WebContents) {
 				version,
 				useStatus: useStatus,
 			}
-			webContents.send('host', JSON.stringify(h))
+			sendMainMessage(win, {
+				type: 'HOST',
+				data: h,
+			})
 		}
 	})
 }
 
-export function updateClientInfo(data: any, webContents: WebContents, onlineStatus: string) {
+export function updateClientInfo(data: any, win: BrowserWindow, onlineStatus: string) {
 	const { ip, version } = data
 	const clientInfo = {
 		ip,
 		onlineStatus,
 		version,
 	}
-	webContents.send('host-update', JSON.stringify(clientInfo))
+	sendMainMessage(win, {
+		type: 'UPDATE_CLIENT_INFO',
+		data: clientInfo,
+	})
 }
 export { discoverHosts }
